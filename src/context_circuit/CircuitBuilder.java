@@ -1,5 +1,8 @@
 package context_circuit;
 
+import java.util.HashMap;
+import java.util.List;
+
 import context_circuit.gates.Gate;
 import context_circuit.gates.GateAND;
 import context_circuit.gates.GateNAND;
@@ -11,10 +14,23 @@ import context_circuit.gates.GateXOR;
 public class CircuitBuilder {
 	
 	private Circuit circuit;
-	
+	private HashMap<String, String> nodeDescriptionMap;
+	private HashMap<String, List<String>> edgeDescriptionMap;
 	
 	public CircuitBuilder() {
 		circuit = new Circuit();
+		buildCircuit();
+	}
+	
+	private void buildCircuit(){
+		CircuitReader cr = CircuitReader.getInstance();
+		cr.getCircuitFromFile("C://Users//Jeffrey Vervoort//Documents//workspace//design_patterns//src//data//circuit1.txt");
+		nodeDescriptionMap = cr.getNodeDescriptionMap();
+		edgeDescriptionMap = cr.getEdgeDescriptionMap();
+		
+		for(String key : nodeDescriptionMap.keySet()){
+			addToCircuit(key, nodeDescriptionMap.get(key));
+		}
 	}
 	
 	private void addToCircuit(String name, String type) {
