@@ -18,9 +18,9 @@ public class Circuit {
 		}
 	}
 	
-	public void connect(String inputname, String outputname) {
-		Gate input = gates.get(inputname);
-		Gate output = gates.get(outputname);
+	public void connect(String inputName, String outputName) {
+		Gate input = gates.get(inputName);
+		Gate output = gates.get(outputName);
 		
 		input.addOutput(output);
 		output.incrementInputCount();
