@@ -14,7 +14,7 @@ public abstract class Gate {
 		outputGates = new ArrayList<Gate>();
 	}
 	
-	abstract void applyLogic();
+	protected abstract void applyLogic();
 	
 	protected void emit(boolean value) {
 		for (Gate g : outputGates) {
@@ -27,6 +27,7 @@ public abstract class Gate {
 		if (inputValues.size() == inputCount) {
 			applyLogic();
 		}
+		inputValues.clear();
 	}
 	
 	public void addOutput(Gate g) {

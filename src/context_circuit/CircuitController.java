@@ -8,6 +8,7 @@ public class CircuitController {
 	
 	public CircuitController() {
 		circuitBuilder = new CircuitBuilder();
+		circuitBuilder.buildCircuitFromFile("E://Users//Daan//workspace//Design_Patterns//src//data//circuit1.txt");
 	}
 	
 }

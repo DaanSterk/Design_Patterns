@@ -77,7 +77,7 @@ public class CircuitReader {
 			} 
 			else if(!i.isEmpty() && i.charAt(0) != '#' && !secondHalf){
 				String key = i.substring(0, i.indexOf(':'));
-				String value = i.substring(i.indexOf(':')+1);
+				String value = i.substring(i.indexOf(':') + 1);
 				nodeDescriptionMap.put(key, value);
 			}
 			else if(!i.isEmpty() && i.charAt(0) != '#' && secondHalf){
