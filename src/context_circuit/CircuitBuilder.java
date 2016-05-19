@@ -32,7 +32,6 @@ public class CircuitBuilder {
 		
 		for(String inputGateName : edgeDescriptionMap.keySet()){
 			for(String outputGateName : edgeDescriptionMap.get(inputGateName)){
-				System.out.println(inputGateName + "___/+\\___" + outputGateName);
 				getCircuit().connect(inputGateName, outputGateName);
 			}
 		}

@@ -4,9 +4,7 @@ public class GateNOT extends Gate {
 	
 	@Override
 	protected void applyLogic() {
-		if (inputValues.get(0)) { 
-			emit(false);
-		}
+		emit(!inputValues.get(0));
 	}
 	
 	@Override // NOT gate may only receive one input.
