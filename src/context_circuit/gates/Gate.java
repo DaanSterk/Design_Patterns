@@ -2,9 +2,14 @@ package context_circuit.gates;
 
 import java.util.ArrayList;
 
+import context_circuit.Circuit;
+import view.CircuitPanel;
+
 public abstract class Gate {
 	
 	private String name;
+	
+	private CircuitPanel view;
 	
 	protected ArrayList<Boolean> inputValues;
 	protected ArrayList<Gate> outputGates;
@@ -59,6 +64,14 @@ public abstract class Gate {
 	
 	public String getType() {
 		return this.getClass().getSimpleName().substring(4);
+	}
+	
+	public void setView(CircuitPanel view) {
+		this.view = view;
+	}
+	
+	public ArrayList<Gate> getOutputGates() {
+		return outputGates;
 	}
 	
 }

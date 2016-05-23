@@ -50,4 +50,8 @@ public class CircuitBuilder {
 		return circuit;
 	}
 	
+	public void passController(CircuitController c) {
+		circuit.setController(c);
+	}
+	
 }

@@ -15,8 +15,13 @@ public class CircuitController {
 	
 	
 	public CircuitController() {
+		initializeView();
+		
 		circuitBuilder = new CircuitBuilder();
+		circuitBuilder.passController(this);
 		circuitBuilder.buildCircuitFromFile("E://Users//Daan//workspace//Design_Patterns//src//data//circuit1.txt");
+		panel.repaint();
+		
 		circuit = circuitBuilder.getCircuit();
 		
 		circuit.setStartingValue("Cin", true);
@@ -25,19 +30,24 @@ public class CircuitController {
 		circuit.track("Cout");
 		circuit.track("S");
 		circuit.simulate();
+	}
+	
+	public void drawGate(String name) {
 		
-		initializeView();
 	}
 	
 	private void initializeView() {
 		frame = new JFrame();
 		panel = new CircuitPanel();
 		
-		frame.setSize(960, 540);
+		frame.setSize(1920, 400);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setTitle("Circuit simulation");
 		frame.setContentPane(panel);
 		frame.setVisible(true);
+	}
+	public CircuitPanel getView() {
+		return panel;
 	}
 	
 }

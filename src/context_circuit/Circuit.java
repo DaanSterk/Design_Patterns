@@ -6,6 +6,7 @@ import java.util.HashMap;
 import context_circuit.gates.Gate;
 
 public class Circuit {
+	private CircuitController controller;
 	
 	private HashMap<String, Gate> gates;
 	private HashMap<String, Boolean> startingValues;
@@ -23,6 +24,8 @@ public class Circuit {
 	public void addGate(Gate g, String name) {
 		if (!gates.containsKey(name)) {
 			g.setName(name);
+			g.setView(controller.getView());
+			controller.getView().drawGate(g);
 			gates.put(name, g);
 		}
 		else {
@@ -46,6 +49,10 @@ public class Circuit {
 		for (String gateName : startingValues.keySet()) {
 			gates.get(gateName).receive(startingValues.get(gateName));
 		}
+	}
+	
+	public void setController(CircuitController controller) {
+		this.controller = controller;
 	}
 	
 }
