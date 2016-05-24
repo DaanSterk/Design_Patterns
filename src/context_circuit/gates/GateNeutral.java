@@ -2,7 +2,7 @@ package context_circuit.gates;
 
 import java.util.ArrayList;
 
-public abstract class GateNeutral extends Gate implements InterfaceGateMediator {
+public class GateNeutral extends Gate implements InterfaceGateMediator {
 	private ANeutralGate privateNeutralGate;
 	private ArrayList<GateNeutral> neutralGates;
 	
@@ -36,11 +36,19 @@ public abstract class GateNeutral extends Gate implements InterfaceGateMediator 
 	}
 	
 	private class ANeutralGate extends AbstractGateNeutral{
-
 		public ANeutralGate(InterfaceGateMediator m) {
 			super(m);
+			//this.setGateNeutral(getOuterClass());
 		}
 		
+//		public GateNeutral getOuterClass() {
+//		   return GateNeutral.this;
+//		}
+		
+		@Override
+		public GateNeutral getGateNeutral(){
+			return GateNeutral.this;
+		}
 	}
 }
 
