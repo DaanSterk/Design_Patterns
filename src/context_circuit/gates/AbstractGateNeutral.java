@@ -1,9 +1,9 @@
 package context_circuit.gates;
 
-public abstract class AbstractNeutralGate {
+public abstract class AbstractGateNeutral {
 	private InterfaceGateMediator mediator;
 	
-	public AbstractNeutralGate(InterfaceGateMediator m){
+	public AbstractGateNeutral(InterfaceGateMediator m){
 		mediator = m;
 	}
 	

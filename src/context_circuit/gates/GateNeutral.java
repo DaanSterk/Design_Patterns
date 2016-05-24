@@ -35,7 +35,7 @@ public abstract class GateNeutral extends Gate implements InterfaceGateMediator 
 		System.out.println("This is the message that was received:" + message);
 	}
 	
-	private class ANeutralGate extends AbstractNeutralGate{
+	private class ANeutralGate extends AbstractGateNeutral{
 
 		public ANeutralGate(InterfaceGateMediator m) {
 			super(m);
