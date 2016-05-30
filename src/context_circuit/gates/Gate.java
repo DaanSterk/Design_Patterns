@@ -9,12 +9,13 @@ public abstract class Gate {
 	
 	private String name;
 	
-	private CircuitPanel view;
+	protected CircuitPanel view;
 	
 	protected ArrayList<Boolean> inputValues;
 	protected ArrayList<Gate> outputGates;
 	
 	protected int inputCount;
+	protected int delay;
 	
 	// TESTING
 	private boolean isTracked;
@@ -25,6 +26,8 @@ public abstract class Gate {
 	public Gate() {	
 		inputValues = new ArrayList<Boolean>();
 		outputGates = new ArrayList<Gate>();
+		
+		delay = 1000; // Default
 	}
 	
 	protected abstract void applyLogic();
@@ -32,6 +35,12 @@ public abstract class Gate {
 	protected void emit(boolean value) {
 		if (isTracked) {
 	 		System.out.println("(" + getType() + ") " + name + ": " + value);
+		}
+		view.showOutput(name, value);
+		try {
+			Thread.sleep(delay);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
 		}
 		for (Gate g : outputGates) {
 			g.receive(value);
@@ -72,6 +81,10 @@ public abstract class Gate {
 	
 	public ArrayList<Gate> getOutputGates() {
 		return outputGates;
+	}
+	
+	public void setDelay(int delay) {
+		this.delay = delay;
 	}
 	
 }

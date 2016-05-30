@@ -55,4 +55,10 @@ public class Circuit {
 		this.controller = controller;
 	}
 	
+	public void setDelay(int delay) { // in milliseconds.
+		for (String name : gates.keySet()) {
+			gates.get(name).setDelay(delay);
+		}
+	}
+	
 }

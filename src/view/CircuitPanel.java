@@ -5,11 +5,14 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import context_circuit.gates.Gate;
 
 public class CircuitPanel extends JPanel {
+	
+	private JFrame parentFrame;
 	
 	private int gateWidth;
 	private int gateHeight;
@@ -21,7 +24,12 @@ public class CircuitPanel extends JPanel {
 	
 	private HashMap<String, Gate> gates;
 	
-	public CircuitPanel() {
+	private String currOutputGateName;
+	private boolean currOutputValue;
+	
+	public CircuitPanel(JFrame parent) {
+		parentFrame = parent;
+		
 		gateWidth = 75;
 		gateHeight = 50;
 		
@@ -37,6 +45,13 @@ public class CircuitPanel extends JPanel {
 		gates.put(g.getName(), g);
 	}
 	
+	public void showOutput(String gateName, boolean value) {
+		currOutputGateName = gateName;
+		currOutputValue = value;
+		repaint();
+		parentFrame.repaint();
+	}
+	
 	@Override
 	public void paintComponent(Graphics g) {
 		int outerCounter = 0;
@@ -46,6 +61,16 @@ public class CircuitPanel extends JPanel {
 			g.drawRect(gateWidth * outerCounter, marginAllTop, gateWidth, gateHeight);
 			g.drawString(gate.getName(), gateWidth * outerCounter + marginStringLeft, marginStringTop + marginAllTop);
 			g.drawString("(" + gate.getType() + ")", gateWidth * outerCounter + marginStringLeft, marginStringTop * 2 + marginAllTop);
+			if (name.equals(currOutputGateName)) {
+				String binaryValue;
+				if (currOutputValue) {
+					binaryValue = "0";
+				}
+				else {
+					binaryValue = "1";
+				}
+				g.drawString(binaryValue, gateWidth * outerCounter + marginStringLeft, marginStringTop * 3 + marginAllTop);
+			}
 			
 			ArrayList<Gate> outputGates = gate.getOutputGates();
 			int innerCounter = 1;

@@ -29,6 +29,7 @@ public class CircuitController {
 		circuit.setStartingValue("B", true);
 		circuit.track("Cout");
 		circuit.track("S");
+		circuit.setDelay(1000);
 		circuit.simulate();
 	}
 	
@@ -38,7 +39,7 @@ public class CircuitController {
 	
 	private void initializeView() {
 		frame = new JFrame();
-		panel = new CircuitPanel();
+		panel = new CircuitPanel(frame);
 		
 		frame.setSize(1920, 400);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
