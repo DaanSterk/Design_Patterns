@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import context_circuit.gates.Gate;
+import context_circuit.gates.GateNeutral;
 
 public class Circuit {
 	private CircuitController controller;
 	
 	private HashMap<String, Gate> gates;
-	private HashMap<String, Boolean> startingValues;
 	
 	// TESTING
 	public void track(String name) {
@@ -18,7 +18,6 @@ public class Circuit {
 	
 	public Circuit(){
 		gates = new HashMap<String, Gate>();
-		startingValues = new HashMap<String, Boolean>();
 	}
 
 	public void addGate(Gate g, String name) {
@@ -41,13 +40,13 @@ public class Circuit {
 		output.incrementInputCount();
 	}
 	
-	public void setStartingValue(String gateName, boolean value) {
-		startingValues.put(gateName, value);
-	}
-	
 	public void simulate() {
-		for (String gateName : startingValues.keySet()) {
-			gates.get(gateName).receive(startingValues.get(gateName));
+		for (String gateName : gates.keySet()) {
+			if (gates.get(gateName) instanceof GateNeutral) {
+
+				GateNeutral gateN = (GateNeutral) gates.get(gateName);
+				gateN.start();
+			}
 		}
 	}
 	
@@ -59,6 +58,16 @@ public class Circuit {
 		for (String name : gates.keySet()) {
 			gates.get(name).setDelay(delay);
 		}
+	}
+	
+	public void setRemember(String gateName, boolean value) {
+		GateNeutral g = (GateNeutral)gates.get(gateName);
+		g.setRemember(value);
+	}
+	
+	public ArrayList<Boolean> getGateMemory(String gateName) {
+		GateNeutral g = (GateNeutral)gates.get(gateName);
+		return g.getMemory();
 	}
 	
 }

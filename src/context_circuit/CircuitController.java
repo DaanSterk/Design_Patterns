@@ -24,17 +24,13 @@ public class CircuitController {
 		
 		circuit = circuitBuilder.getCircuit();
 		
-		circuit.setStartingValue("Cin", true);
-		circuit.setStartingValue("A", true);
-		circuit.setStartingValue("B", true);
+		circuit.connect("Cout", "Cin");
 		circuit.track("Cout");
 		circuit.track("S");
 		circuit.setDelay(1000);
+//		circuit.setRemember("S", true);
 		circuit.simulate();
-	}
-	
-	public void drawGate(String name) {
-		
+		System.out.println(circuit.getGateMemory("Cout"));
 	}
 	
 	private void initializeView() {

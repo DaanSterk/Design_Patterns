@@ -49,7 +49,7 @@ public class CircuitPanel extends JPanel {
 		currOutputGateName = gateName;
 		currOutputValue = value;
 		repaint();
-		parentFrame.repaint();
+//		parentFrame.repaint();
 	}
 	
 	@Override
@@ -57,28 +57,47 @@ public class CircuitPanel extends JPanel {
 		int outerCounter = 0;
 		for (String name : gates.keySet()) {
 			Gate gate = gates.get(name);
-			g.setColor(Color.RED);
-			g.drawRect(gateWidth * outerCounter, marginAllTop, gateWidth, gateHeight);
-			g.drawString(gate.getName(), gateWidth * outerCounter + marginStringLeft, marginStringTop + marginAllTop);
-			g.drawString("(" + gate.getType() + ")", gateWidth * outerCounter + marginStringLeft, marginStringTop * 2 + marginAllTop);
+			
+			// If gate name equals the name of the gate that is currently emitting, set green background and show output value.
 			if (name.equals(currOutputGateName)) {
 				String binaryValue;
 				if (currOutputValue) {
-					binaryValue = "0";
-				}
-				else {
 					binaryValue = "1";
 				}
+				else {
+					binaryValue = "0";
+				}
+				
+				g.setColor(Color.GREEN);
+				g.fillRect(gateWidth * outerCounter, marginAllTop, gateWidth, gateHeight);
+				
+				g.setColor(Color.RED);
 				g.drawString(binaryValue, gateWidth * outerCounter + marginStringLeft, marginStringTop * 3 + marginAllTop);
 			}
 			
+			g.setColor(Color.RED);
+			
+			// Draw outline
+			g.drawRect(gateWidth * outerCounter, marginAllTop, gateWidth, gateHeight);
+			
+			// Draw contents (name, type)
+			g.drawString(gate.getName(), gateWidth * outerCounter + marginStringLeft, marginStringTop + marginAllTop);
+			g.drawString("(" + gate.getType() + ")", gateWidth * outerCounter + marginStringLeft, marginStringTop * 2 + marginAllTop);
+			
+			
+			
 			ArrayList<Gate> outputGates = gate.getOutputGates();
-			int innerCounter = 1;
+			int innerCounter = 1; // Starts at 1 because 0 is already taken by red gates.
 			for (Gate h : outputGates) {
 				g.setColor(Color.BLUE);
+				
+				// Draw outline
 				g.drawRect(gateWidth * outerCounter, marginAllTop + gateHeight * innerCounter + marginConnectedTop, gateWidth, gateHeight);
+				
+				// Draw contents (name, type)
 				g.drawString(h.getName(), gateWidth * outerCounter + marginStringLeft, marginAllTop + gateHeight * innerCounter + marginStringTop + marginConnectedTop);
 				g.drawString("(" + h.getType() + ")", gateWidth * outerCounter + marginStringLeft, marginAllTop + gateHeight * innerCounter + marginStringTop * 2 + marginConnectedTop);
+				
 				innerCounter++;
 			}
 			

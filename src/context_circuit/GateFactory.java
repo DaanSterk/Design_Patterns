@@ -33,6 +33,16 @@ public class GateFactory {
 		case "XOR":
 			gate = new GateXOR();
 			break;
+		case " INPUT_LOW": // TODO fix reader
+			gate = new GateNeutral();
+			GateNeutral gateN = (GateNeutral) gate;
+			gateN.setStartingValue(false);
+			break;
+		case "INPUT_HIGH":
+			gate = new GateNeutral();
+			GateNeutral gateM = (GateNeutral) gate;
+			gateM.setStartingValue(true);
+			break;
 		default:
 			gate = new GateNeutral();
 			break;

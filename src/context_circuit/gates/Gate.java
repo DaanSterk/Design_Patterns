@@ -15,7 +15,7 @@ public abstract class Gate {
 	protected ArrayList<Gate> outputGates;
 	
 	protected int inputCount;
-	protected int delay;
+	private int delay;
 	
 	// TESTING
 	private boolean isTracked;
@@ -33,6 +33,7 @@ public abstract class Gate {
 	protected abstract void applyLogic();
 	
 	protected void emit(boolean value) {
+		inputValues.clear();
 		if (isTracked) {
 	 		System.out.println("(" + getType() + ") " + name + ": " + value);
 		}
@@ -51,7 +52,6 @@ public abstract class Gate {
 		inputValues.add(value);
 		if (inputValues.size() >= inputCount) { // >= instead of == because of starting gates having inputCount = 0
 			applyLogic();
-			inputValues.clear();
 		}
 	}
 	
