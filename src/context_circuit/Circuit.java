@@ -1,6 +1,5 @@
 package context_circuit;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import context_circuit.gates.Gate;
@@ -28,16 +27,23 @@ public class Circuit {
 			gates.put(name, g);
 		}
 		else {
-			// TODO exception 'gate already exists'.
+			System.out.println("ERROR: Trying to add a gate that already exists. (name: " + name + ")");
+			System.exit(0);
 		}
 	}
 	
 	public void connect(String inputName, String outputName) {
-		Gate input = gates.get(inputName);
-		Gate output = gates.get(outputName);
-		
-		input.addOutput(output);
-		output.incrementInputCount();
+		if (!inputName.equals(outputName)) {
+			Gate input = gates.get(inputName);
+			Gate output = gates.get(outputName);
+			
+			input.addOutput(output);
+			output.incrementInputCount();
+		}
+		else {
+			System.out.println("ERROR: Trying to connect gate to itself. (name: " + inputName + ")");
+			System.exit(0);
+		}
 	}
 	
 	public void simulate() {
@@ -58,16 +64,6 @@ public class Circuit {
 		for (String name : gates.keySet()) {
 			gates.get(name).setDelay(delay);
 		}
-	}
-	
-	public void setRemember(String gateName, boolean value) {
-		GateNeutral g = (GateNeutral)gates.get(gateName);
-		g.setRemember(value);
-	}
-	
-	public ArrayList<Boolean> getGateMemory(String gateName) {
-		GateNeutral g = (GateNeutral)gates.get(gateName);
-		return g.getMemory();
 	}
 	
 }

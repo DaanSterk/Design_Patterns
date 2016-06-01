@@ -1,6 +1,11 @@
 package context_circuit;
 
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+
 import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 import view.CircuitPanel;
 
@@ -19,28 +24,29 @@ public class CircuitController {
 		
 		circuitBuilder = new CircuitBuilder();
 		circuitBuilder.passController(this);
-		circuitBuilder.buildCircuitFromFile("E://Users//Daan//workspace//Design_Patterns//src//data//circuit1.txt");
-		panel.repaint();
-		
+		circuitBuilder.buildCircuitFromFile("E://Users//Daan//workspace//Design_Patterns//src//data//CIRCUIT3.txt");
 		circuit = circuitBuilder.getCircuit();
 		
-		circuit.connect("Cout", "Cin");
-		circuit.track("Cout");
-		circuit.track("S");
-		circuit.setDelay(1000);
-//		circuit.setRemember("S", true);
+		// Configuration
+//		circuit.track("Cout");
+		circuit.track("F");
+		circuit.setDelay(10);
+		
 		circuit.simulate();
-		System.out.println(circuit.getGateMemory("Cout"));
 	}
 	
 	private void initializeView() {
 		frame = new JFrame();
 		panel = new CircuitPanel(frame);
 		
-		frame.setSize(1920, 400);
+//		frame.setContentPane(panel);
+		
+		panel.setPreferredSize(new Dimension(100000, 400));
+		frame.setContentPane(new JScrollPane(panel));
+
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setTitle("Circuit simulation");
-		frame.setContentPane(panel);
+		frame.setSize(1920, 400);
 		frame.setVisible(true);
 	}
 	public CircuitPanel getView() {

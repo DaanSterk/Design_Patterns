@@ -49,7 +49,7 @@ public class CircuitPanel extends JPanel {
 		currOutputGateName = gateName;
 		currOutputValue = value;
 		repaint();
-//		parentFrame.repaint();
+		parentFrame.repaint();
 	}
 	
 	@Override
@@ -61,12 +61,7 @@ public class CircuitPanel extends JPanel {
 			// If gate name equals the name of the gate that is currently emitting, set green background and show output value.
 			if (name.equals(currOutputGateName)) {
 				String binaryValue;
-				if (currOutputValue) {
-					binaryValue = "1";
-				}
-				else {
-					binaryValue = "0";
-				}
+				if (currOutputValue) binaryValue = "1"; else binaryValue = "0";
 				
 				g.setColor(Color.GREEN);
 				g.fillRect(gateWidth * outerCounter, marginAllTop, gateWidth, gateHeight);
@@ -89,6 +84,13 @@ public class CircuitPanel extends JPanel {
 			ArrayList<Gate> outputGates = gate.getOutputGates();
 			int innerCounter = 1; // Starts at 1 because 0 is already taken by red gates.
 			for (Gate h : outputGates) {
+				
+				g.setColor(Color.YELLOW);
+				
+				if (h.getName().equals(currOutputGateName)) {
+					g.fillRect(gateWidth * outerCounter, marginAllTop + gateHeight * innerCounter + marginConnectedTop, gateWidth, gateHeight);
+				}
+				
 				g.setColor(Color.BLUE);
 				
 				// Draw outline
