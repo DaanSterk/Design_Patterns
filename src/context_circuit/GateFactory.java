@@ -10,7 +10,7 @@ import context_circuit.gates.GateOR;
 import context_circuit.gates.GateXOR;
 
 public class GateFactory {
-
+	
 	public Gate getGate(String type) {
 		Gate gate;
 		switch (type.toUpperCase()) {
@@ -36,6 +36,11 @@ public class GateFactory {
 			gate = new GateNeutral();
 			GateNeutral gateN = (GateNeutral) gate;
 			gateN.setStartingValue(false);
+			break;
+		case " INPUT_LOW":
+			gate = new GateNeutral();
+			GateNeutral gateX = (GateNeutral) gate;
+			gateX.setStartingValue(false);
 			break;
 		case "INPUT_HIGH":
 			gate = new GateNeutral();

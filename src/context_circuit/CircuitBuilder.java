@@ -21,8 +21,8 @@ public class CircuitBuilder {
 	
 	public void buildCircuitFromFile(String path){
 		CircuitReader circuitReader = CircuitReader.getInstance();
-		circuitReader.getCircuitFromFile(path); 	// Jeffrey: C://Users//Jeffrey Vervoort//Documents//workspace//design_patterns//src//data//circuit1.txt
-													// Daan: 	E://Users//Daan//workspace//Design_Patterns//src//data//circuit1.txt
+		circuitReader.getCircuitFromFile(path); 	
+
 		nodeDescriptionMap = circuitReader.getNodeDescriptionMap();
 		edgeDescriptionMap = circuitReader.getEdgeDescriptionMap();
 		
@@ -35,10 +35,6 @@ public class CircuitBuilder {
 				getCircuit().connect(inputGateName, outputGateName);
 			}
 		}
-	}
-	
-	private void buildCircuitManually() {
-		// Testcode
 	}
 	
 	private void addToCircuit(String name, String type) {

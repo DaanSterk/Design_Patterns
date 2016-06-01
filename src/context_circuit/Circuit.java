@@ -66,4 +66,8 @@ public class Circuit {
 		}
 	}
 	
+	public int getGateAmount() {
+		return gates.size();
+	}
+	
 }

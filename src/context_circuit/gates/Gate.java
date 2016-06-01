@@ -2,7 +2,6 @@ package context_circuit.gates;
 
 import java.util.ArrayList;
 
-import context_circuit.Circuit;
 import view.CircuitPanel;
 
 public abstract class Gate {

@@ -2,17 +2,22 @@ package view;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import context_circuit.CircuitController;
 import context_circuit.gates.Gate;
 
+@SuppressWarnings("serial")
 public class CircuitPanel extends JPanel {
 	
 	private JFrame parentFrame;
+	private CircuitController controller;
 	
 	private int gateWidth;
 	private int gateHeight;
@@ -27,8 +32,9 @@ public class CircuitPanel extends JPanel {
 	private String currOutputGateName;
 	private boolean currOutputValue;
 	
-	public CircuitPanel(JFrame parent) {
+	public CircuitPanel(JFrame parent, CircuitController controller) {
 		parentFrame = parent;
+		this.controller = controller;
 		
 		gateWidth = 75;
 		gateHeight = 50;
@@ -39,6 +45,26 @@ public class CircuitPanel extends JPanel {
 		marginConnectedTop = 2;
 		
 		gates = new HashMap<String, Gate>();
+		
+		setFocusable(true);
+		requestFocusInWindow();
+		addKeyListener(new KeyListener() {
+
+			@Override
+			public void keyPressed(KeyEvent key) {
+				if (key.getKeyCode() == KeyEvent.VK_SPACE) {
+					// Restart ...
+				}
+			}
+			
+			@Override
+			public void keyReleased(KeyEvent arg0) {
+			}
+			@Override
+			public void keyTyped(KeyEvent arg0) {
+			}
+			
+		});
 	}
 	
 	public void drawGate(Gate g) {
@@ -105,6 +131,10 @@ public class CircuitPanel extends JPanel {
 			
 			outerCounter++;
 		}
+	}
+	
+	public int getGateWidth() {
+		return gateWidth;
 	}
 	
 }

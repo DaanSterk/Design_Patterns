@@ -1,11 +1,13 @@
 package context_circuit;
 
-import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.io.File;
+import java.io.IOException;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JViewport;
 
 import view.CircuitPanel;
 
@@ -21,34 +23,49 @@ public class CircuitController {
 	
 	public CircuitController() {
 		initializeView();
-		
-		circuitBuilder = new CircuitBuilder();
-		circuitBuilder.passController(this);
-		circuitBuilder.buildCircuitFromFile("E://Users//Daan//workspace//Design_Patterns//src//data//circuit4.txt");
-		circuit = circuitBuilder.getCircuit();
-		
-		// Configuration
-		circuit.setDelay(1000);
-		
-		circuit.simulate();
+		start();
 	}
 	
 	private void initializeView() {
 		frame = new JFrame();
-		panel = new CircuitPanel(frame);
+		panel = new CircuitPanel(frame, this);
 		
-//		frame.setContentPane(panel);
-		
-		panel.setPreferredSize(new Dimension(100000, 400));
-		frame.setContentPane(new JScrollPane(panel));
+		JScrollPane scrollPane = new JScrollPane(panel);
+		scrollPane.getViewport().setScrollMode(JViewport.SIMPLE_SCROLL_MODE); // To fix scroll repaint issues.
+		frame.setContentPane(scrollPane);
 
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setTitle("Circuit simulation");
 		frame.setSize(1920, 400);
-		frame.setVisible(true);
 	}
+	
+	private void start() {
+		circuitBuilder = new CircuitBuilder();
+		circuitBuilder.passController(this);
+		circuitBuilder.buildCircuitFromFile(getDataPath() + "//circuit1.txt");
+		circuit = circuitBuilder.getCircuit();
+		
+		panel.setPreferredSize(new Dimension(circuit.getGateAmount() * panel.getGateWidth(), 400));
+		frame.setVisible(true);
+		
+		// Configuration
+		circuit.setDelay(500);
+		
+		circuit.simulate();
+	}
+	
 	public CircuitPanel getView() {
 		return panel;
+	}
+	
+	private String getDataPath() {
+		String path = null;
+		try {
+			path = new File(".").getCanonicalPath();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return path + "//src//data";
 	}
 	
 }
