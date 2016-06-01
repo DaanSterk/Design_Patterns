@@ -13,7 +13,7 @@ public class GateFactory {
 
 	public Gate getGate(String type) {
 		Gate gate;
-		
+		System.out.println(type);
 		switch (type.toUpperCase()) {
 		case "NOT":
 			gate = new GateNOT();
@@ -33,7 +33,7 @@ public class GateFactory {
 		case "XOR":
 			gate = new GateXOR();
 			break;
-		case " INPUT_LOW": // TODO fix reader
+		case "INPUT_LOW":
 			gate = new GateNeutral();
 			GateNeutral gateN = (GateNeutral) gate;
 			gateN.setStartingValue(false);

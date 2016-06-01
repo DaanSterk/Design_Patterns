@@ -24,13 +24,11 @@ public class CircuitController {
 		
 		circuitBuilder = new CircuitBuilder();
 		circuitBuilder.passController(this);
-		circuitBuilder.buildCircuitFromFile("E://Users//Daan//workspace//Design_Patterns//src//data//CIRCUIT3.txt");
+		circuitBuilder.buildCircuitFromFile("E://Users//Daan//workspace//Design_Patterns//src//data//circuit4.txt");
 		circuit = circuitBuilder.getCircuit();
 		
 		// Configuration
-//		circuit.track("Cout");
-		circuit.track("F");
-		circuit.setDelay(10);
+		circuit.setDelay(1000);
 		
 		circuit.simulate();
 	}
