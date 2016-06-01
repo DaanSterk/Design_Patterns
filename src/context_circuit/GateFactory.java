@@ -13,7 +13,6 @@ public class GateFactory {
 
 	public Gate getGate(String type) {
 		Gate gate;
-		System.out.println(type);
 		switch (type.toUpperCase()) {
 		case "NOT":
 			gate = new GateNOT();
