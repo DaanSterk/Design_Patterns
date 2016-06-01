@@ -37,11 +37,6 @@ public class GateFactory {
 			GateNeutral gateN = (GateNeutral) gate;
 			gateN.setStartingValue(false);
 			break;
-		case " INPUT_LOW":
-			gate = new GateNeutral();
-			GateNeutral gateX = (GateNeutral) gate;
-			gateX.setStartingValue(false);
-			break;
 		case "INPUT_HIGH":
 			gate = new GateNeutral();
 			GateNeutral gateM = (GateNeutral) gate;
