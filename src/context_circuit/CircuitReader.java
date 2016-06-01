@@ -14,7 +14,7 @@ public class CircuitReader {
 	private List<String> fileList;
 	private HashMap<String, String> nodeDescriptionMap;
 	private HashMap<String, List<String>> edgeDescriptionMap;
-	
+
 	private CircuitReader(){}
 	
 	public static CircuitReader getInstance(){
@@ -76,13 +76,14 @@ public class CircuitReader {
 				secondHalf = true;
 			} 
 			else if(!i.isEmpty() && i.charAt(0) != '#' && !secondHalf){
-				String key = i.substring(0, i.indexOf(':'));
-				String value = i.substring(i.indexOf(':') + 1);
+				String key = i.substring(0, i.indexOf(':')).trim();
+				String value = i.substring(i.indexOf(':') + 1).trim();
 				nodeDescriptionMap.put(key, value);
 			}
 			else if(!i.isEmpty() && i.charAt(0) != '#' && secondHalf){
-				String key = i.substring(0, i.indexOf(':'));
-				List<String> value = Arrays.asList(i.substring(i.indexOf(':')+1).split(","));
+				String key = i.substring(0, i.indexOf(':')).trim();
+				
+				List<String> value = Arrays.asList(i.substring(i.indexOf(':')+1).trim().split(","));
 				edgeDescriptionMap.put(key, value);
 			}
 		}
