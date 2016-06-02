@@ -1,6 +1,8 @@
-package context_circuit.gates;
+package circuit_gates;
 
-public class GateNeutral extends Gate {
+import context_circuit.gates.Gate;
+
+public class GateNeutral extends Gate{
 	
 	private boolean isStarter;
 	private boolean startingValue;
@@ -33,6 +35,11 @@ public class GateNeutral extends Gate {
 	public void setStartingValue(boolean value) {
 		isStarter = true;
 		startingValue = value;
+	}
+
+	@Override
+	public Gate copy() {
+		return new GateNeutral();
 	}
 	
 }

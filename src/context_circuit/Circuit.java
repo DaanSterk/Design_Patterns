@@ -2,8 +2,8 @@ package context_circuit;
 
 import java.util.HashMap;
 
+import circuit_gates.GateNeutral;
 import context_circuit.gates.Gate;
-import context_circuit.gates.GateNeutral;
 
 public class Circuit {
 	private CircuitController controller;

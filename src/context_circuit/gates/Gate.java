@@ -1,11 +1,10 @@
 package context_circuit.gates;
 
 import java.util.ArrayList;
-
 import context_circuit.Circuit;
 import view.CircuitPanel;
 
-public abstract class Gate {
+public abstract class Gate implements AbstractGate{
 
 	protected String name;
 
@@ -91,5 +90,4 @@ public abstract class Gate {
 	public void setDelay(int delay) {
 		this.delay = delay;
 	}
-
 }

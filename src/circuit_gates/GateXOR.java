@@ -1,6 +1,8 @@
-package context_circuit.gates;
+package circuit_gates;
 
-public class GateXOR extends Gate {
+import context_circuit.gates.Gate;
+
+public class GateXOR extends Gate{
 
 	@Override
 	protected void applyLogic() {
@@ -12,6 +14,11 @@ public class GateXOR extends Gate {
 		if (inputCount < 2) {
 			super.incrementInputCount();
 		}
+	}
+
+	@Override
+	public Gate copy() {
+		return new GateXOR();
 	}
 	
 }

@@ -1,6 +1,8 @@
-package context_circuit.gates;
+package circuit_gates;
 
-public class GateOR extends Gate {
+import context_circuit.gates.Gate;
+
+public class GateOR extends Gate{
 
 	@Override
 	protected void applyLogic() {
@@ -13,5 +15,10 @@ public class GateOR extends Gate {
 		}
 		emit(outputValue);
 	}
-	
+
+	@Override
+	public Gate copy() {
+		return new GateOR();
+	}
+
 }

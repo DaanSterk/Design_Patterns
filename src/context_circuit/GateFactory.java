@@ -1,53 +1,87 @@
 package context_circuit;
 
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.List;
+
+import circuit_gates.GateNeutral;
 import context_circuit.gates.Gate;
-import context_circuit.gates.GateAND;
-import context_circuit.gates.GateNAND;
-import context_circuit.gates.GateNOR;
-import context_circuit.gates.GateNOT;
-import context_circuit.gates.GateNeutral;
-import context_circuit.gates.GateOR;
-import context_circuit.gates.GateXOR;
 
 public class GateFactory {
-
-	public Gate getGate(String type) {
-		Gate gate;
-		switch (type.toUpperCase()) {
-		case "NOT":
-			gate = new GateNOT();
-			break;
-		case "AND":
-			gate = new GateAND();
-			break;
-		case "OR":
-			gate = new GateOR();
-			break;
-		case "NAND":
-			gate = new GateNAND();
-			break;
-		case "NOR":
-			gate = new GateNOR();
-			break;
-		case "XOR":
-			gate = new GateXOR();
-			break;
-		case "INPUT_LOW":
-			gate = new GateNeutral();
-			GateNeutral gateN = (GateNeutral) gate;
-			gateN.setStartingValue(false);
-			break;
-		case "INPUT_HIGH":
-			gate = new GateNeutral();
-			GateNeutral gateM = (GateNeutral) gate;
-			gateM.setStartingValue(true);
-			break;
-		default:
-			gate = new GateNeutral();
-			break;
+	private static final HashMap<String, Gate> gates;
+	private static List<Class> gateClassArray;
+	//private static final ArrayList<String> neutralTypes = new ArrayList<String>(){{add("A"); add("B"); add("CIN"); add("COUT"); add("S"); add("R"); add("Q"); add("NQ"); add("F");}};
+	
+	static {
+		gateClassArray = new ArrayList<Class>();
+		try {
+			gateClassArray = findClasses(new File(System.getProperty("user.dir") + "//src//circuit_gates"), "circuit_gates");
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
 		}
 		
-		return gate;
+		gates = new HashMap<String, Gate>();
+		
+		for(Class gate : gateClassArray){
+			try {
+				gates.put(gate.getSimpleName(), (Gate) gate.newInstance());
+			} catch (InstantiationException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IllegalAccessException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+//		for(String key : gates.keySet()){
+//			gates.get(key).testPrint();
+//		}
 	}
 	
+	public static final Gate create(final String type, final String name){
+		if(gates.containsKey(name)){
+			return gates.get(name).copy();
+		} 
+//		else if (neutralTypes.contains(type)){	
+//			return gates.get("GateNeutral").copy();
+//		}
+		else{
+			return gates.get("GateNeutral").copy();
+		}
+		
+//		final String message = String.format("Gate type '%s' was not found.", name);
+//		throw new IllegalArgumentException(message);
+	}
+	
+	/**
+	 * Recursive method used to find all classes in a given directory and subdirs.
+	 *
+	 * @param directory   The base directory
+	 * @param packageName The package name for classes found inside the base directory
+	 * @return The classes
+	 * @throws ClassNotFoundException
+	 */
+	private static List<Class> findClasses(File directory, String packageName) throws ClassNotFoundException {
+	    List<Class> classes = new ArrayList<Class>();
+	    if (!directory.exists()) {
+	        return classes;
+	    }
+	    File[] files = directory.listFiles();
+	    for (File file : files) {
+	        if (file.isDirectory()) {
+	            assert !file.getName().contains(".");
+	            classes.addAll(findClasses(file, packageName + "." + file.getName()));
+	        //} else if (file.getName().endsWith(".class")) {
+	        } else if (file.getName().endsWith(".class")) {
+	            classes.add(Class.forName(packageName + '.' + file.getName().substring(0, file.getName().length() - 6)));
+	        } else if (file.getName().endsWith(".java")) {
+	            classes.add(Class.forName(packageName + '.' + file.getName().substring(0, file.getName().length() - 5)));
+	        }
+	    }
+	    return classes;
+	}
 }

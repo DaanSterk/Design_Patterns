@@ -1,8 +1,11 @@
 package context_circuit;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import circuit_gates.GateNeutral;
+import context_circuit.gates.AbstractGate;
 import context_circuit.gates.Gate;
 
 public class CircuitBuilder {
@@ -13,6 +16,7 @@ public class CircuitBuilder {
 	private HashMap<String, String> nodeDescriptionMap;
 	private HashMap<String, List<String>> edgeDescriptionMap;
 	
+	private static final ArrayList<String> neutralTypes = new ArrayList<String>(){{add("A"); add("B"); add("CIN"); add("COUT"); add("S"); add("R"); add("Q"); add("NQ"); add("F");}};
 	
 	public CircuitBuilder() {
 		circuit = new Circuit();
@@ -42,8 +46,23 @@ public class CircuitBuilder {
 	}
 	
 	private void addToCircuit(String name, String type) {
-		Gate gate = gateFactory.getGate(type);
-		getCircuit().addGate(gate, name);
+		//Gate gate = gateFactory.getGate(type);
+		type = "Gate" + type;
+		try{
+			final Gate gate = gateFactory.create(name, type);
+			if(type == "INPUT_LOW"){
+				GateNeutral gateN = (GateNeutral) gate;
+				gateN.setStartingValue(false);
+			} else if(type == "INPUT_HIGH"){
+				GateNeutral gateN = (GateNeutral) gate;
+				gateN.setStartingValue(true);
+			}
+			
+			getCircuit().addGate(gate, name);
+		} 
+		catch ( IllegalArgumentException exception ) {
+			System.out.println( exception.getMessage() );
+		}
 	}
 	
 	public Circuit getCircuit() {
