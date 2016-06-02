@@ -1,26 +1,22 @@
 package context_circuit;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import circuit_gates.GateNeutral;
-import context_circuit.gates.AbstractGate;
 import context_circuit.gates.Gate;
 
 public class CircuitBuilder {
 	
 	private Circuit circuit;
-	private GateFactory gateFactory;
+	//private GateFactory GateFactory;
 	
 	private HashMap<String, String> nodeDescriptionMap;
 	private HashMap<String, List<String>> edgeDescriptionMap;
 	
-	private static final ArrayList<String> neutralTypes = new ArrayList<String>(){{add("A"); add("B"); add("CIN"); add("COUT"); add("S"); add("R"); add("Q"); add("NQ"); add("F");}};
-	
 	public CircuitBuilder() {
 		circuit = new Circuit();
-		gateFactory = new GateFactory();
+		//GateFactory = new GateFactory();
 	}
 	
 	public void buildCircuitFromFile(String path){
@@ -41,10 +37,9 @@ public class CircuitBuilder {
 	}
 	
 	private void addToCircuit(String name, String type) {
-		//Gate gate = gateFactory.getGate(type);
 		type = "Gate" + type;
 		try{
-			final Gate gate = gateFactory.create(name, type);
+			final Gate gate = GateFactory.create(name, type);
 			if(type == "INPUT_LOW"){
 				GateNeutral gateN = (GateNeutral) gate;
 				gateN.setStartingValue(false);

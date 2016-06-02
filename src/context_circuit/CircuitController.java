@@ -1,10 +1,7 @@
 package context_circuit;
 
 import java.awt.Dimension;
-import java.io.File;
-import java.io.IOException;
 
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JViewport;
@@ -19,7 +16,6 @@ public class CircuitController {
 	// VIEW
 	private JFrame frame;
 	private CircuitPanel panel;
-	
 	
 	public CircuitController() {
 		initializeView();
