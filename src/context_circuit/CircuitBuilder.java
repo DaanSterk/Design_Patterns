@@ -40,7 +40,6 @@ public class CircuitBuilder {
 		type = "Gate" + type;
 		try{
 			final Gate gate = GateFactory.create(name, type);
-			System.out.println(type);
 			if(type.equals("GateINPUT_LOW")){
 				GateNeutral gateN = (GateNeutral) gate;
 				gateN.setStartingValue(false);
