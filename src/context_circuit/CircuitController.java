@@ -1,8 +1,10 @@
 package context_circuit;
 
 import java.awt.Dimension;
+import java.awt.event.WindowEvent;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JViewport;
 
@@ -50,6 +52,7 @@ public class CircuitController {
 //		circuit.track("Cout");
 		
 		circuit.simulate();
+		restart();
 	}
 	
 	public CircuitPanel getView() {
@@ -60,4 +63,21 @@ public class CircuitController {
 		return System.getProperty("user.dir") + "//src//data//circuit1.txt";
 	}
 	
+	private void restart(){
+		int option = restartDialog();
+		
+		if(JOptionPane.OK_OPTION == option){
+			frame.setVisible(false);
+			frame.dispose();
+			initializeView();
+			start();
+		}
+	}
+	
+	private int restartDialog(){
+		Object[] options = { "RESTART", "CANCEL" };
+		return JOptionPane.showOptionDialog(null, "Click RESTART to restart the circuit.", "Do you want to restart the circuit?",
+		             JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE,
+		             null, options, options[0]);
+	}
 }
