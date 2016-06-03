@@ -9,14 +9,12 @@ import context_circuit.gates.Gate;
 public class CircuitBuilder {
 	
 	private Circuit circuit;
-	//private GateFactory GateFactory;
 	
 	private HashMap<String, String> nodeDescriptionMap;
 	private HashMap<String, List<String>> edgeDescriptionMap;
 	
 	public CircuitBuilder() {
 		circuit = new Circuit();
-		//GateFactory = new GateFactory();
 	}
 	
 	public void buildCircuitFromFile(String path){

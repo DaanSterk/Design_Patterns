@@ -13,7 +13,7 @@ import exceptions.CustomException;
 public class CircuitReaderTest {
 
 	@Test
-	public void TestNodeDescription() {
+	public void testNodeDescription() {
 		CircuitReader circuitReader = CircuitReader.getInstance();
 		circuitReader.getCircuitFromFile(getDataPath(1));
 		HashMap<String, String> nodeDescriptionMap = circuitReader.getNodeDescriptionMap();
@@ -23,7 +23,7 @@ public class CircuitReaderTest {
 	}
 	
 	@Test
-	public void TestEdgeDescription() {
+	public void testEdgeDescription() {
 		CircuitReader circuitReader = CircuitReader.getInstance();
 		circuitReader.getCircuitFromFile(getDataPath(1));
 		HashMap<String, List<String>> edgeDescriptionMap = circuitReader.getEdgeDescriptionMap();
@@ -34,7 +34,7 @@ public class CircuitReaderTest {
 	}
 	
 	@Test(expected=CustomException.class)
-	public void TestIfGateExists(){
+	public void testIfGateExists(){
 		CircuitReader circuitReader = CircuitReader.getInstance();
 		circuitReader.getCircuitFromFile(getDataPath(4));
 	}
