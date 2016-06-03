@@ -14,7 +14,6 @@ import context_circuit.gates.Gate;
 public class GateFactory {
 	private static final HashMap<String, Gate> gates;
 	private static List<Class> gateClassArray;
-	//private static final ArrayList<String> neutralTypes = new ArrayList<String>(){{add("A"); add("B"); add("CIN"); add("COUT"); add("S"); add("R"); add("Q"); add("NQ"); add("F");}};
 	
 	static {
 		gateClassArray = new ArrayList<Class>();
@@ -47,9 +46,6 @@ public class GateFactory {
 		if(gates.containsKey(name)){
 			return gates.get(name).copy();
 		} 
-//		else if (neutralTypes.contains(type)){	
-//			return gates.get("GateNeutral").copy();
-//		}
 		else{
 			return gates.get("GateNeutral").copy();
 		}

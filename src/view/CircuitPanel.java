@@ -32,9 +32,8 @@ public class CircuitPanel extends JPanel {
 	private String currOutputGateName;
 	private boolean currOutputValue;
 	
-	public CircuitPanel(JFrame parent, CircuitController controller) {
+	public CircuitPanel(JFrame parent) {
 		parentFrame = parent;
-		this.controller = controller;
 		
 		gateWidth = 75;
 		gateHeight = 50;
@@ -45,26 +44,6 @@ public class CircuitPanel extends JPanel {
 		marginConnectedTop = 2;
 		
 		gates = new HashMap<String, Gate>();
-		
-		setFocusable(true);
-		requestFocusInWindow();
-		addKeyListener(new KeyListener() {
-
-			@Override
-			public void keyPressed(KeyEvent key) {
-				if (key.getKeyCode() == KeyEvent.VK_SPACE) {
-					// Restart ...
-				}
-			}
-			
-			@Override
-			public void keyReleased(KeyEvent arg0) {
-			}
-			@Override
-			public void keyTyped(KeyEvent arg0) {
-			}
-			
-		});
 	}
 	
 	public void drawGate(Gate g) {

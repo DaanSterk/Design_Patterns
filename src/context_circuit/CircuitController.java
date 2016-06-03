@@ -26,7 +26,7 @@ public class CircuitController {
 	
 	private void initializeView() {
 		frame = new JFrame();
-		panel = new CircuitPanel(frame, this);
+		panel = new CircuitPanel(frame);
 		
 		JScrollPane scrollPane = new JScrollPane(panel);
 		scrollPane.getViewport().setScrollMode(JViewport.SIMPLE_SCROLL_MODE); // To fix scroll repaint issues.
@@ -47,7 +47,7 @@ public class CircuitController {
 		frame.setVisible(true);
 		
 		// Configuration
-		circuit.setDelay(500);
+		circuit.setDelay(15);
 //		circuit.track("S");
 //		circuit.track("Cout");
 		
