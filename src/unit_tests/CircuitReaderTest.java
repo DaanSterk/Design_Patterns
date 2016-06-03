@@ -8,13 +8,14 @@ import java.util.List;
 import org.junit.Test;
 
 import context_circuit.CircuitReader;
+import exceptions.CustomException;
 
 public class CircuitReaderTest {
 
 	@Test
 	public void TestNodeDescription() {
 		CircuitReader circuitReader = CircuitReader.getInstance();
-		circuitReader.getCircuitFromFile(getDataPath());
+		circuitReader.getCircuitFromFile(getDataPath(1));
 		HashMap<String, String> nodeDescriptionMap = circuitReader.getNodeDescriptionMap();
 		assertEquals(nodeDescriptionMap.get("B"), "INPUT_HIGH");
 		assertEquals(nodeDescriptionMap.get("NODE7"), "NOT");
@@ -24,7 +25,7 @@ public class CircuitReaderTest {
 	@Test
 	public void TestEdgeDescription() {
 		CircuitReader circuitReader = CircuitReader.getInstance();
-		circuitReader.getCircuitFromFile(getDataPath());
+		circuitReader.getCircuitFromFile(getDataPath(1));
 		HashMap<String, List<String>> edgeDescriptionMap = circuitReader.getEdgeDescriptionMap();
 
 		String[] actuals = {"NODE8", "NODE9"};
@@ -32,8 +33,14 @@ public class CircuitReaderTest {
 		assertArrayEquals(edgeDescriptionMap.get("NODE5").toArray(), actuals);
 	}
 	
-	private String getDataPath() {
-		return System.getProperty("user.dir") + "//src//data//circuit1.txt";
+	@Test(expected=CustomException.class)
+	public void TestIfGateExists(){
+		CircuitReader circuitReader = CircuitReader.getInstance();
+		circuitReader.getCircuitFromFile(getDataPath(4));
+	}
+	
+	private String getDataPath(int id) {
+		return System.getProperty("user.dir") + "//src//data//circuit" + id + ".txt";
 	}
 
 }
