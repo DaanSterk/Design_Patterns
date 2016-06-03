@@ -40,10 +40,11 @@ public class CircuitBuilder {
 		type = "Gate" + type;
 		try{
 			final Gate gate = GateFactory.create(name, type);
-			if(type == "INPUT_LOW"){
+			System.out.println(type);
+			if(type.equals("GateINPUT_LOW")){
 				GateNeutral gateN = (GateNeutral) gate;
 				gateN.setStartingValue(false);
-			} else if(type == "INPUT_HIGH"){
+			} else if(type.equals("GateINPUT_HIGH")){
 				GateNeutral gateN = (GateNeutral) gate;
 				gateN.setStartingValue(true);
 			}
