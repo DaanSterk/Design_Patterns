@@ -91,18 +91,22 @@ public class CircuitReader {
 			else if(!i.isEmpty() && i.charAt(0) != '#' && secondHalf){
 				String key = i.substring(0, i.indexOf(':')).trim();
 				
-				if(getEdgeDescriptionMap().containsKey(key)){
-					try {
-						throw new CustomException(DoubleKeyCircuit);
-					} catch (CustomException e) {
-						e.printStackTrace();
-						System.out.println(e);
-						System.exit(0);
-					}
-				}
+				CheckForDoubleKeyCircuit(key);
 				
 				List<String> value = Arrays.asList(i.substring(i.indexOf(':')+1).trim().split(","));
 				edgeDescriptionMap.put(key, value);
+			}
+		}
+	}
+	
+	private void CheckForDoubleKeyCircuit(String key){
+		if(getEdgeDescriptionMap().containsKey(key)){
+			try {
+				throw new CustomException(DoubleKeyCircuit);
+			} catch (CustomException e) {
+				e.printStackTrace();
+				System.out.println(e);
+				System.exit(0);
 			}
 		}
 	}
