@@ -21,8 +21,7 @@ public class FactoryTest {
 	
 	@Test
 	public void CreateGateNeutral() {
-		Gate g = GateFactory.create("NODE3", "GateNeutral");
+		Gate g = GateFactory.create("Cout", "GateNeutral");
 		assertThat(g, instanceOf(GateNeutral.class));
 	}
-
 }
