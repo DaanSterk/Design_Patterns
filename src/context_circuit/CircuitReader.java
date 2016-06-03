@@ -57,7 +57,7 @@ public class CircuitReader {
 	
 	/**
 	 * A method for reading out the txt files.
-	 * It removes the whitespace, tabs and ; from the files.
+	 * It removes the tabs and ; from the files.
 	 */
 	private void readFile(){
 		fileList = new ArrayList<String>();

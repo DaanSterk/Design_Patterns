@@ -30,18 +30,19 @@ public class GateFactory {
 			try {
 				gates.put(gate.getSimpleName(), (Gate) gate.newInstance());
 			} catch (InstantiationException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (IllegalAccessException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
-//		for(String key : gates.keySet()){
-//			gates.get(key).testPrint();
-//		}
 	}
 	
+	/**
+	 * Creates a new object that is a subtype of Gate.
+	 * @param type
+	 * @param name
+	 * @return Gate
+	 */
 	public static final Gate create(final String type, final String name){
 		if(gates.containsKey(name)){
 			return gates.get(name).copy();
@@ -75,7 +76,6 @@ public class GateFactory {
 	        if (file.isDirectory()) {
 	            assert !file.getName().contains(".");
 	            classes.addAll(findClasses(file, packageName + "." + file.getName()));
-	        //} else if (file.getName().endsWith(".class")) {
 	        } else if (file.getName().endsWith(".class")) {
 	            classes.add(Class.forName(packageName + '.' + file.getName().substring(0, file.getName().length() - 6)));
 	        } else if (file.getName().endsWith(".java")) {
