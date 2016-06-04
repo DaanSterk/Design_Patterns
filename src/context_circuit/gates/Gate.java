@@ -13,6 +13,7 @@ public abstract class Gate implements AbstractGate{
 	protected ArrayList<Gate> outputGates;
 
 	protected int inputCount;
+	protected int outputValue;
 	private int delay;
 
 	// TESTING
@@ -33,6 +34,7 @@ public abstract class Gate implements AbstractGate{
 
 	protected void emit(boolean value) {
 		inputValues.clear();
+		setOutputValue(value);
 		if (isTracked) {
 			String binary;
 			if (value) binary = "1"; else binary = "0";
@@ -88,5 +90,16 @@ public abstract class Gate implements AbstractGate{
 
 	public void setDelay(int delay) {
 		this.delay = delay;
+	}
+	
+	public int getOutputValue() {
+		return outputValue;
+	}
+	
+	private void setOutputValue(boolean output) {
+		if(output)
+			outputValue = 1;
+		else
+			outputValue = 0;
 	}
 }

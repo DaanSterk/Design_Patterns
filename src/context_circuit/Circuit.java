@@ -14,6 +14,9 @@ public class Circuit {
 	public void track(String name) {
 		gates.get(name).track();
 	}
+	public int getOutputValue(String name) {
+		return gates.get(name).getOutputValue();
+	}
 	
 	public Circuit(){
 		gates = new HashMap<String, Gate>();

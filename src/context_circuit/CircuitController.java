@@ -59,6 +59,10 @@ public class CircuitController {
 		return panel;
 	}
 	
+	public CircuitBuilder getCircuitBuilder(){
+		return circuitBuilder;
+	}
+	
 	private String getDataPath() {
 		return System.getProperty("user.dir") + "//src//data//circuit1.txt";
 	}
