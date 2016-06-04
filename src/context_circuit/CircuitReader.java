@@ -20,7 +20,6 @@ public class CircuitReader {
 	private final String GateDoesNotExist = "ERROR: The gate does not exist in the input file.";
 	private final String GateHasNoDescription = "ERROR: The gate does not have a description.";
 	private final String GateIsNotConnected = "ERROR: The gate is not connected to another gate.";
-	private final String InfiniteCircuitLoop = "ERROR: There is an infinite loop in the circuit.";
 
 	private CircuitReader(){}
 	
@@ -39,8 +38,8 @@ public class CircuitReader {
 	public void getCircuitFromFile(String filePath){
 		this.filePath = filePath;
 		readFile();
-		GenerateNodeHashMaps();
-		CheckForErrorsInHashMap();
+		generateNodeHashMaps();
+		checkForErrorsInHashMap();
 	}
 	
 	public List<String> getFileList(){
@@ -74,7 +73,7 @@ public class CircuitReader {
 	 * A hashmap with the node descriptions
 	 * And a hashmap with the edge descriptions
 	 */
-	private void GenerateNodeHashMaps(){
+	private void generateNodeHashMaps(){
 		nodeDescriptionMap = new HashMap<String, String>();
 		edgeDescriptionMap = new HashMap<String, List<String>>();
 		Boolean secondHalf = false;
@@ -91,7 +90,7 @@ public class CircuitReader {
 			else if(!i.isEmpty() && i.charAt(0) != '#' && secondHalf){
 				String key = i.substring(0, i.indexOf(':')).trim();
 				
-				CheckForDoubleKeyCircuit(key);
+				checkForDoubleKeyCircuit(key);
 				
 				List<String> value = Arrays.asList(i.substring(i.indexOf(':')+1).trim().split(","));
 				edgeDescriptionMap.put(key, value);
@@ -99,7 +98,7 @@ public class CircuitReader {
 		}
 	}
 	
-	private void CheckForDoubleKeyCircuit(String key){
+	private void checkForDoubleKeyCircuit(String key){
 		if(getEdgeDescriptionMap().containsKey(key)){
 			try {
 				throw new CustomException(DoubleKeyCircuit);
@@ -111,15 +110,15 @@ public class CircuitReader {
 		}
 	}
 	
-	private void CheckForErrorsInHashMap(){
+	private void checkForErrorsInHashMap(){
 		for(String key : getEdgeDescriptionMap().keySet()){
-			CheckIfGateHasNoDescription(key);
-			CheckIfGateIsNotConnected(key);
-			CheckIfGateDoesNotExist(key);
+			checkIfGateHasNoDescription(key);
+			checkIfGateIsNotConnected(key);
+			checkIfGateDoesNotExist(key);
 		}
 	}
 	
-	private void CheckIfGateHasNoDescription(String key){
+	private void checkIfGateHasNoDescription(String key){
 		if(!getNodeDescriptionMap().containsKey(key)){
 			try {
 				throw new CustomException(GateHasNoDescription);
@@ -131,7 +130,7 @@ public class CircuitReader {
 		}
 	}
 	
-	private void CheckIfGateIsNotConnected(String key){
+	private void checkIfGateIsNotConnected(String key){
 		List<String> list = getEdgeDescriptionMap().get(key);
 		
 		if(list.isEmpty()){
@@ -163,7 +162,7 @@ public class CircuitReader {
 		}
 	}
 	
-	private void CheckIfGateDoesNotExist(String key){
+	private void checkIfGateDoesNotExist(String key){
 		for(String value : getEdgeDescriptionMap().get(key)){
 			if(!getEdgeDescriptionMap().containsKey(value) && value.toUpperCase().contains("NODE")){
 				try {
