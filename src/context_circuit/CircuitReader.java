@@ -120,7 +120,7 @@ public class CircuitReader {
 	}
 	
 	private void CheckIfGateHasNoDescription(String key){
-		if(!getEdgeDescriptionMap().containsKey(key)){
+		if(!getNodeDescriptionMap().containsKey(key)){
 			try {
 				throw new CustomException(GateHasNoDescription);
 			} catch (CustomException e) {
@@ -132,13 +132,33 @@ public class CircuitReader {
 	}
 	
 	private void CheckIfGateIsNotConnected(String key){
-		if(getEdgeDescriptionMap().get(key).isEmpty()){
+		List<String> list = getEdgeDescriptionMap().get(key);
+		
+		if(list.isEmpty()){
 			try {
 				throw new CustomException(GateIsNotConnected);
 			} catch (CustomException e) {
 				e.printStackTrace();
 				System.out.println(e);
 				System.exit(0);
+			}
+		} else {
+			int emptyStrings = 0;
+			for(String i : list){
+				if(i.isEmpty()){
+					emptyStrings++;
+				} else{
+					break;
+				}
+			}
+			if(emptyStrings >= list.size()){
+				try {
+					throw new CustomException(GateIsNotConnected);
+				} catch (CustomException e) {
+					e.printStackTrace();
+					System.out.println(e);
+					System.exit(0);
+				}
 			}
 		}
 	}
