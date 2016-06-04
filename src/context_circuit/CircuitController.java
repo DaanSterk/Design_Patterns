@@ -47,7 +47,7 @@ public class CircuitController {
 		frame.setVisible(true);
 		
 		// Configuration
-		circuit.setDelay(1000);
+		circuit.setDelay(15);
 //		circuit.track("S");
 //		circuit.track("Cout");
 		
