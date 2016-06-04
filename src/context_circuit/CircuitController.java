@@ -1,7 +1,6 @@
 package context_circuit;
 
 import java.awt.Dimension;
-import java.awt.event.WindowEvent;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -9,6 +8,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JViewport;
 
 import view.CircuitPanel;
+import view.ConsoleInteractor;
 
 public class CircuitController {
 
@@ -47,9 +47,18 @@ public class CircuitController {
 		frame.setVisible(true);
 		
 		// Configuration
-		circuit.setDelay(15);
+		circuit.setDelay(1000);
 //		circuit.track("S");
 //		circuit.track("Cout");
+		
+		ConsoleInteractor ci = new ConsoleInteractor();
+		System.out.println("Enter a command (case sensitive): 1: (gateName) (startingValue), 2: start");
+		while (!ci.isClosed()) {
+			String[] input = ci.command();
+			if (input != null) {
+				circuit.setStartingValue(input);
+			}
+		}
 		
 		circuit.simulate();
 		restart();

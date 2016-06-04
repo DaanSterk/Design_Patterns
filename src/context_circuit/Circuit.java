@@ -63,6 +63,24 @@ public class Circuit {
 		this.controller = controller;
 	}
 	
+	public void setStartingValue(String[] nameAndValue) {
+		if (gates.get(nameAndValue[0]) == null) {
+			System.out.println("ERROR: Invalid gate name.");
+		}
+		else if (!(gates.get(nameAndValue[0]) instanceof GateNeutral)) {
+			System.out.println("ERROR: Gate is not of type 'Neutral'.");
+		}
+		else if (!nameAndValue[1].equals("0") && !nameAndValue[1].equals("1")) {
+			System.out.println("ERROR: Invalid input value (0 or 1).");
+		}
+		else {
+			GateNeutral gn = (GateNeutral) gates.get(nameAndValue[0]);
+			boolean startingValue = true;
+			if (nameAndValue[1].equals("0")) startingValue = false;
+			gn.setStartingValue(startingValue);
+		}
+	}
+	
 	public void setDelay(int delay) { // in milliseconds.
 		for (String name : gates.keySet()) {
 			gates.get(name).setDelay(delay);
