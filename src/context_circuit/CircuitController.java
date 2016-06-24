@@ -73,7 +73,7 @@ public class CircuitController {
 	}
 	
 	private String getDataPath() {
-		return System.getProperty("user.dir") + "//src//data//circuit2.txt";
+		return System.getProperty("user.dir") + "//src//data//circuit1.txt";
 	}
 	
 	private void restart(){

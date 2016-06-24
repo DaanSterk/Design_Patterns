@@ -14,14 +14,26 @@ import context_circuit.gates.Gate;
 public class FactoryTest {
 
 	@Test
-	public void testCreateGateAND() {
-		Gate g = GateFactory.create("NODE3", "GateAND");
-		assertThat(g, instanceOf(GateAND.class));
+	public void create_NewGateAnd_CreateGateAnd_ShouldBeAnInstanceOfGateAND() {
+		//Arrange
+		Class<?> expectedGateType = GateAND.class;
+		
+		//Act
+		Gate actualGate = GateFactory.create("NODE3", "GateAND");
+		
+		//Assert
+		assertThat(actualGate, instanceOf(expectedGateType));
 	}
 	
 	@Test
-	public void testCreateGateNeutral() {
-		Gate g = GateFactory.create("Cout", "GateNeutral");
-		assertThat(g, instanceOf(GateNeutral.class));
+	public void create_NewGateNeutral_CreateGateNeutral_ShouldBeAnInstanceOfGateNeutral() {
+		//Arrange
+		Class<?> expectedGateType = GateNeutral.class;
+		
+		//Act
+		Gate actualGate = GateFactory.create("Cout", "GateNeutral");
+		
+		//Assert
+		assertThat(actualGate, instanceOf(expectedGateType));
 	}
 }

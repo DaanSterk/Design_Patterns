@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
+
+import javax.swing.JOptionPane;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -22,6 +25,7 @@ public class CircuitReader {
 	private final String GateDoesNotExist = "ERROR: The gate does not exist in the input file.";
 	private final String GateHasNoDescription = "ERROR: The gate does not have a description.";
 	private final String GateIsNotConnected = "ERROR: The gate is not connected to another gate.";
+	private final String CircuitHasACircularDependency = "ERROR: Circular dependency detected. Exiting...";
 
 	private CircuitReader(){}
 	
@@ -47,7 +51,7 @@ public class CircuitReader {
 			checkForCircularDependencies();
 		}
 		catch (StackOverflowError e) {
-			System.out.println("Circular dependency detected. Exiting...");
+			System.out.println(CircuitHasACircularDependency);
 			System.exit(0);
 		}
 	}
@@ -110,13 +114,7 @@ public class CircuitReader {
 	
 	private void checkForDoubleKeyCircuit(String key){
 		if(getEdgeDescriptionMap().containsKey(key)){
-			try {
-				throw new CustomException(DoubleKeyCircuit);
-			} catch (CustomException e) {
-				e.printStackTrace();
-				System.out.println(e);
-				System.exit(0);
-			}
+			tryAndCatchError(DoubleKeyCircuit);
 		}
 	}
 	
@@ -130,13 +128,7 @@ public class CircuitReader {
 	
 	private void checkIfGateHasNoDescription(String key){
 		if(!getNodeDescriptionMap().containsKey(key)){
-			try {
-				throw new CustomException(GateHasNoDescription);
-			} catch (CustomException e) {
-				e.printStackTrace();
-				System.out.println(e);
-				System.exit(0);
-			}
+			tryAndCatchError(GateHasNoDescription);
 		}
 	}
 	
@@ -144,13 +136,7 @@ public class CircuitReader {
 		List<String> list = getEdgeDescriptionMap().get(key);
 		
 		if(list.isEmpty()){
-			try {
-				throw new CustomException(GateIsNotConnected);
-			} catch (CustomException e) {
-				e.printStackTrace();
-				System.out.println(e);
-				System.exit(0);
-			}
+			tryAndCatchError(GateIsNotConnected);
 		} else {
 			int emptyStrings = 0;
 			for(String i : list){
@@ -161,13 +147,7 @@ public class CircuitReader {
 				}
 			}
 			if(emptyStrings >= list.size()){
-				try {
-					throw new CustomException(GateIsNotConnected);
-				} catch (CustomException e) {
-					e.printStackTrace();
-					System.out.println(e);
-					System.exit(0);
-				}
+				tryAndCatchError(GateIsNotConnected);
 			}
 		}
 	}
@@ -175,13 +155,7 @@ public class CircuitReader {
 	private void checkIfGateDoesNotExist(String key){
 		for(String value : getEdgeDescriptionMap().get(key)){
 			if(!getEdgeDescriptionMap().containsKey(value) && value.toUpperCase().contains("NODE")){
-				try {
-					throw new CustomException(GateDoesNotExist);
-				} catch (CustomException e) {
-					e.printStackTrace();
-					System.out.println(e);
-					System.exit(0);
-				}
+				tryAndCatchError(GateDoesNotExist);
 			}
 		}
 	}
@@ -205,6 +179,15 @@ public class CircuitReader {
 		// Check for circular dependency.
 		for (String key : links.keySet()) {
 			links.get(key).next();
+		}
+	}
+	
+	private void tryAndCatchError(String error){
+		try {
+			throw new CustomException(error);
+		} catch (CustomException e) {
+			System.out.println(error + " Exiting...");
+			System.exit(0);
 		}
 	}
 }
