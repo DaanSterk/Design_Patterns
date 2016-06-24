@@ -47,12 +47,6 @@ public class CircuitReaderTest {
 		assertArrayEquals(actualNODE5EdgeDescription, expectedNODE5EdgeDescriptions);
 	}
 	
-	@Test(expected=CustomException.class)
-	public void testIfGateExists_GetCircuit4_ThrowCustomException_GateIsNotConnected(){
-		CircuitReader circuitReader = CircuitReader.getInstance();
-		circuitReader.getCircuitFromFile(getDataPath(4));
-	}
-	
 	private String getDataPath(int id) {
 		return System.getProperty("user.dir") + "//src//data//circuit" + id + ".txt";
 	}

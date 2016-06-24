@@ -12,15 +12,26 @@ public class CircuitSimulationTest {
 
 	/**
 	 * A test written for testing circuit 1.
+	 * Parameters:
+	 * A: 1
+	 * B: 1
+	 * Cin: 0
 	 */
 	@Test
-	public void testSimulationOutput() {
+	public void runSimulationCircuit1WithAAndB1_COUTAndSOutput_ShouldEqualCircuitCOUTAndSOutput() {
+		//Arrange
+		int expectedCoutOutput = 1;
+		int expectedSOutput = 0;
+		
+		//Act
 		CircuitController cc = new CircuitController();
 		CircuitBuilder cb = cc.getCircuitBuilder();
 		Circuit c = cb.getCircuit();
-		int Cout = c.getOutputValue("Cout");
-		int S = c.getOutputValue("S");
-		assertEquals(1, Cout);
-		assertEquals(0, S);
+		int ActualCoutOutput = c.getOutputValue("Cout");
+		int ActualSOutput = c.getOutputValue("S");
+		
+		//Assert
+		assertEquals(expectedCoutOutput, ActualCoutOutput);
+		assertEquals(expectedSOutput, ActualSOutput);
 	}
 }
