@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import exceptions.CustomException;
+import misc.Link;
 
 public class CircuitReader {
 	private static CircuitReader instance = null;
@@ -18,11 +19,13 @@ public class CircuitReader {
 	private List<String> fileList;
 	private HashMap<String, String> nodeDescriptionMap;
 	private HashMap<String, List<String>> edgeDescriptionMap;
+	private HashMap<String, Link> links;
 	
 	private final String DoubleKeyCircuit = "ERROR: The name of the gate key has already been used.";
 	private final String GateDoesNotExist = "ERROR: The gate does not exist in the input file.";
 	private final String GateHasNoDescription = "ERROR: The gate does not have a description.";
 	private final String GateIsNotConnected = "ERROR: The gate is not connected to another gate.";
+	private final String CircuitHasACircularDependency = "ERROR: Circular dependency detected. Exiting...";
 
 	private CircuitReader(){}
 	
@@ -43,6 +46,14 @@ public class CircuitReader {
 		readFile();
 		generateNodeHashMaps();
 		checkForErrorsInHashMap();
+		createLinkedList();
+		try {
+			checkForCircularDependencies();
+		}
+		catch (StackOverflowError e) {
+			System.out.println(CircuitHasACircularDependency);
+			System.exit(0);
+		}
 	}
 	
 	public List<String> getFileList(){
@@ -149,14 +160,33 @@ public class CircuitReader {
 		}
 	}
 	
+	private void createLinkedList() {
+		// Create hashmap of Link names and Link objects.
+		links = new HashMap<String, Link>();
+		for (String key : getNodeDescriptionMap().keySet()) {
+			links.put(key, new Link(key));
+		}
+		
+		// Link links to each other.
+		for (String key : getEdgeDescriptionMap().keySet()) {
+			for (String val : getEdgeDescriptionMap().get(key)) {
+				links.get(key).addNextLink(links.get(val));
+			}
+		}
+	}
+	
+	private void checkForCircularDependencies() {
+		// Check for circular dependency.
+		for (String key : links.keySet()) {
+			links.get(key).next();
+		}
+	}
+	
 	private void tryAndCatchError(String error){
 		try {
 			throw new CustomException(error);
 		} catch (CustomException e) {
-			Object[] options = {"OK"};
-			JOptionPane.showOptionDialog(null, error, "Click OK to close the application",
-		             JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE,
-		             null, options, options[0]);
+			System.out.println(error + " Exiting...");
 			System.exit(0);
 		}
 	}
