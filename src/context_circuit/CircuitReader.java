@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import exceptions.CustomException;
+import misc.Link;
 
 public class CircuitReader {
 	private static CircuitReader instance = null;
@@ -15,6 +16,7 @@ public class CircuitReader {
 	private List<String> fileList;
 	private HashMap<String, String> nodeDescriptionMap;
 	private HashMap<String, List<String>> edgeDescriptionMap;
+	private HashMap<String, Link> links;
 	
 	private final String DoubleKeyCircuit = "ERROR: The name of the gate key has already been used.";
 	private final String GateDoesNotExist = "ERROR: The gate does not exist in the input file.";
@@ -40,6 +42,14 @@ public class CircuitReader {
 		readFile();
 		generateNodeHashMaps();
 		checkForErrorsInHashMap();
+		createLinkedList();
+		try {
+			checkForCircularDependencies();
+		}
+		catch (StackOverflowError e) {
+			System.out.println("Circular dependency detected. Exiting...");
+			System.exit(0);
+		}
 	}
 	
 	public List<String> getFileList(){
@@ -173,6 +183,28 @@ public class CircuitReader {
 					System.exit(0);
 				}
 			}
+		}
+	}
+	
+	private void createLinkedList() {
+		// Create hashmap of Link names and Link objects.
+		links = new HashMap<String, Link>();
+		for (String key : getNodeDescriptionMap().keySet()) {
+			links.put(key, new Link(key));
+		}
+		
+		// Link links to each other.
+		for (String key : getEdgeDescriptionMap().keySet()) {
+			for (String val : getEdgeDescriptionMap().get(key)) {
+				links.get(key).addNextLink(links.get(val));
+			}
+		}
+	}
+	
+	private void checkForCircularDependencies() {
+		// Check for circular dependency.
+		for (String key : links.keySet()) {
+			links.get(key).next();
 		}
 	}
 }
