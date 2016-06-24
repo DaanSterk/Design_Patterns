@@ -13,28 +13,42 @@ import exceptions.CustomException;
 public class CircuitReaderTest {
 
 	@Test
-	public void testNodeDescription() {
+	public void testNodeDescriptionCircuitOne_SetTheDescription_GetTheDescription_ShouldEqualDescription() {
+		//Arrange
+		String expectedBDescription = "INPUT_HIGH";
+		String expectedNODE7Description = "NOT";
+		String incorrectExpectedBDescription = "INPUT_LOW";
+		
+		//Act
 		CircuitReader circuitReader = CircuitReader.getInstance();
 		circuitReader.getCircuitFromFile(getDataPath(1));
 		HashMap<String, String> nodeDescriptionMap = circuitReader.getNodeDescriptionMap();
-		assertEquals(nodeDescriptionMap.get("B"), "INPUT_HIGH");
-		assertEquals(nodeDescriptionMap.get("NODE7"), "NOT");
-		assertNotEquals(nodeDescriptionMap.get("B"), "INPUT_LOW");
+		String actualBDescription = nodeDescriptionMap.get("B");
+		String actualNODE7Description = nodeDescriptionMap.get("NODE7");
+		
+		//Assert
+		assertEquals(actualBDescription, expectedBDescription);
+		assertEquals(actualNODE7Description, expectedNODE7Description);
+		assertNotEquals(actualBDescription, incorrectExpectedBDescription);
 	}
 	
 	@Test
-	public void testEdgeDescription() {
+	public void testEdgeDescriptionCircuitOne_SetEdgeDescriptionOfGate_GetEdgeDescription_ShouldEqualEdgeDescription() {
+		//Arrange
+		String[] expectedNODE5EdgeDescriptions = {"NODE8", "NODE9"};
+		
+		//Act
 		CircuitReader circuitReader = CircuitReader.getInstance();
 		circuitReader.getCircuitFromFile(getDataPath(1));
 		HashMap<String, List<String>> edgeDescriptionMap = circuitReader.getEdgeDescriptionMap();
-
-		String[] actuals = {"NODE8", "NODE9"};
+		String[] actualNODE5EdgeDescription = edgeDescriptionMap.get("NODE5").toArray(new String[0]);
 		
-		assertArrayEquals(edgeDescriptionMap.get("NODE5").toArray(), actuals);
+		//Assert
+		assertArrayEquals(actualNODE5EdgeDescription, expectedNODE5EdgeDescriptions);
 	}
 	
 	@Test(expected=CustomException.class)
-	public void testIfGateExists(){
+	public void testIfGateExists_GetCircuit4_ThrowCustomException_GateIsNotConnected(){
 		CircuitReader circuitReader = CircuitReader.getInstance();
 		circuitReader.getCircuitFromFile(getDataPath(4));
 	}

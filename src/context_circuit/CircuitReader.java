@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
+
+import javax.swing.JOptionPane;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -100,13 +103,7 @@ public class CircuitReader {
 	
 	private void checkForDoubleKeyCircuit(String key){
 		if(getEdgeDescriptionMap().containsKey(key)){
-			try {
-				throw new CustomException(DoubleKeyCircuit);
-			} catch (CustomException e) {
-				e.printStackTrace();
-				System.out.println(e);
-				System.exit(0);
-			}
+			tryAndCatchError(DoubleKeyCircuit);
 		}
 	}
 	
@@ -120,13 +117,7 @@ public class CircuitReader {
 	
 	private void checkIfGateHasNoDescription(String key){
 		if(!getNodeDescriptionMap().containsKey(key)){
-			try {
-				throw new CustomException(GateHasNoDescription);
-			} catch (CustomException e) {
-				e.printStackTrace();
-				System.out.println(e);
-				System.exit(0);
-			}
+			tryAndCatchError(GateHasNoDescription);
 		}
 	}
 	
@@ -134,13 +125,7 @@ public class CircuitReader {
 		List<String> list = getEdgeDescriptionMap().get(key);
 		
 		if(list.isEmpty()){
-			try {
-				throw new CustomException(GateIsNotConnected);
-			} catch (CustomException e) {
-				e.printStackTrace();
-				System.out.println(e);
-				System.exit(0);
-			}
+			tryAndCatchError(GateIsNotConnected);
 		} else {
 			int emptyStrings = 0;
 			for(String i : list){
@@ -151,13 +136,7 @@ public class CircuitReader {
 				}
 			}
 			if(emptyStrings >= list.size()){
-				try {
-					throw new CustomException(GateIsNotConnected);
-				} catch (CustomException e) {
-					e.printStackTrace();
-					System.out.println(e);
-					System.exit(0);
-				}
+				tryAndCatchError(GateIsNotConnected);
 			}
 		}
 	}
@@ -165,14 +144,20 @@ public class CircuitReader {
 	private void checkIfGateDoesNotExist(String key){
 		for(String value : getEdgeDescriptionMap().get(key)){
 			if(!getEdgeDescriptionMap().containsKey(value) && value.toUpperCase().contains("NODE")){
-				try {
-					throw new CustomException(GateDoesNotExist);
-				} catch (CustomException e) {
-					e.printStackTrace();
-					System.out.println(e);
-					System.exit(0);
-				}
+				tryAndCatchError(GateDoesNotExist);
 			}
+		}
+	}
+	
+	private void tryAndCatchError(String error){
+		try {
+			throw new CustomException(error);
+		} catch (CustomException e) {
+			Object[] options = {"OK"};
+			JOptionPane.showOptionDialog(null, error, "Click OK to close the application",
+		             JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE,
+		             null, options, options[0]);
+			System.exit(0);
 		}
 	}
 }
