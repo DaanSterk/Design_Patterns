@@ -2,9 +2,11 @@ package context_circuit;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
+import circuit_gates.*;
 import context_circuit.gates.Gate;
 
 public class GateFactory {
@@ -16,7 +18,8 @@ public class GateFactory {
 		try {
 			gateClassArray = findClasses(new File(System.getProperty("user.dir") + "//src//circuit_gates"), "circuit_gates");
 		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
+			System.out.println("It was not possible to retrieve the gates from the package circuit_gates. Therefore the default array with classes is used.");
+			gateClassArray.addAll(Arrays.asList(GateAND.class, GateNAND.class, GateNeutral.class, GateNOR.class, GateNOT.class, GateOR.class, GateXOR.class));
 		}
 		
 		gates = new HashMap<String, Gate>();
