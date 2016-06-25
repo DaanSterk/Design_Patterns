@@ -47,13 +47,7 @@ public class CircuitReader {
 		generateNodeHashMaps();
 		checkForErrorsInHashMap();
 		createLinkedList();
-		try {
-			checkForCircularDependencies();
-		}
-		catch (StackOverflowError e) {
-			System.out.println(CircuitHasACircularDependency);
-			System.exit(0);
-		}
+		checkForCircularDependencies();
 	}
 	
 	public List<String> getFileList(){
@@ -177,8 +171,14 @@ public class CircuitReader {
 	
 	private void checkForCircularDependencies() {
 		// Check for circular dependency.
-		for (String key : links.keySet()) {
-			links.get(key).next();
+		try {
+			for (String key : links.keySet()) {
+				links.get(key).next();
+			}
+		}
+		catch (StackOverflowError e) {
+			System.out.println(CircuitHasACircularDependency);
+			System.exit(0);
 		}
 	}
 	
