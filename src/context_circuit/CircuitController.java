@@ -7,6 +7,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JViewport;
 
+import globals.GlobalVariables;
 import view.CircuitPanel;
 import view.ConsoleInteractor;
 
@@ -20,7 +21,8 @@ public class CircuitController {
 	private CircuitPanel panel;
 	
 	public CircuitController() {
-		initializeView();
+		if(!GlobalVariables.IS_UNIT_TESTING)
+			initializeView();
 		start();
 	}
 	
@@ -43,24 +45,19 @@ public class CircuitController {
 		circuitBuilder.buildCircuitFromFile(getDataPath());
 		circuit = circuitBuilder.getCircuit();
 		
-		panel.setPreferredSize(new Dimension(circuit.getGateAmount() * panel.getGateWidth(), 400));
-		frame.setVisible(true);
+		if(!GlobalVariables.IS_UNIT_TESTING){
+			panel.setPreferredSize(new Dimension(circuit.getGateAmount() * panel.getGateWidth(), 400));
+			frame.setVisible(true);
+			readInput();
+		}
 		
 		// Configuration
 		circuit.setDelay(500);
 //		circuit.track("S");
 //		circuit.track("Cout");
-		
-		ConsoleInteractor ci = new ConsoleInteractor();
-		System.out.println("Enter a command (case sensitive): 1: (gateName) (startingValue), 2: start");
-		while (!ci.isClosed()) {
-			String[] input = ci.command();
-			if (input != null) {
-				circuit.setStartingValue(input);
-			}
-		}
-		
+
 		circuit.simulate();
+		
 		restart();
 	}
 	
@@ -76,14 +73,27 @@ public class CircuitController {
 		return System.getProperty("user.dir") + "//src//data//circuit1.txt";
 	}
 	
+	private void readInput(){
+		ConsoleInteractor ci = new ConsoleInteractor();
+		System.out.println("Enter a command (case sensitive): 1: (gateName) (startingValue), 2: start");
+		while (!ci.isClosed()) {
+			String[] input = ci.command();
+			if (input != null) {
+				circuit.setStartingValue(input);
+			}
+		}
+	}
+	
 	private void restart(){
-		int option = restartDialog();
-		
-		if(JOptionPane.OK_OPTION == option){
-			frame.setVisible(false);
-			frame.dispose();
-			initializeView();
-			start();
+		if(!GlobalVariables.IS_UNIT_TESTING){
+			int option = restartDialog();
+			
+			if(JOptionPane.OK_OPTION == option){
+				frame.setVisible(false);
+				frame.dispose();
+				initializeView();
+				start();
+			}
 		}
 	}
 	
