@@ -1,14 +1,10 @@
 package context_circuit;
 
 import java.io.File;
-import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 
-import circuit_gates.GateNeutral;
 import context_circuit.gates.Gate;
 
 public class GateFactory {

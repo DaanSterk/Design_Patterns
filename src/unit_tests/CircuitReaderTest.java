@@ -8,7 +8,6 @@ import java.util.List;
 import org.junit.Test;
 
 import context_circuit.CircuitReader;
-import exceptions.CustomException;
 
 public class CircuitReaderTest {
 
