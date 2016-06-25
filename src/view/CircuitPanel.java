@@ -70,12 +70,11 @@ public class CircuitPanel extends JPanel {
 				
 				g.setColor(Color.GREEN);
 				g.fillRect(gateWidth * outerCounter, marginAllTop, gateWidth, gateHeight);
-				
-				g.setColor(Color.RED);
-				g.drawString(binaryValue, gateWidth * outerCounter + marginStringLeft, marginStringTop * 3 + marginAllTop);
 			}
 			
+			// Draw output value
 			g.setColor(Color.RED);
+			g.drawString(Integer.toString(gate.getOutputValue()), gateWidth * outerCounter + marginStringLeft, marginStringTop * 3 + marginAllTop);
 			
 			// Draw outline
 			g.drawRect(gateWidth * outerCounter, marginAllTop, gateWidth, gateHeight);
