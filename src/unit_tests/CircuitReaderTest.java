@@ -5,11 +5,18 @@ import static org.junit.Assert.*;
 import java.util.HashMap;
 import java.util.List;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import context_circuit.CircuitReader;
+import globals.GlobalVariables;
 
 public class CircuitReaderTest {
+	
+	@Before
+	public void setup(){
+		GlobalVariables.IS_UNIT_TESTING = true;
+	}
 
 	@Test
 	public void testNodeDescriptionCircuitOne_SetTheDescription_GetTheDescription_ShouldEqualDescription() {

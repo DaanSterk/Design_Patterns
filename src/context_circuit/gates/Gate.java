@@ -1,6 +1,8 @@
 package context_circuit.gates;
 
 import java.util.ArrayList;
+
+import globals.GlobalVariables;
 import view.CircuitPanel;
 
 public abstract class Gate implements AbstractGate{
@@ -40,7 +42,8 @@ public abstract class Gate implements AbstractGate{
 			if (value) binary = "1"; else binary = "0";
 			System.out.println("[Tracker] (" + getType() + ") " + name + ": " + binary);
 		}
-		view.showOutput(name, value);
+		if(!GlobalVariables.IS_UNIT_TESTING)
+			view.showOutput(name, value);
 		try {
 			Thread.sleep(delay);
 		} catch (InterruptedException e) {

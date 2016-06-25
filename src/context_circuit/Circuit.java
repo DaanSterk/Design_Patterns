@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import circuit_gates.GateNeutral;
 import context_circuit.gates.Gate;
+import globals.GlobalVariables;
 
 public class Circuit {
 	private CircuitController controller;
@@ -25,8 +26,10 @@ public class Circuit {
 	public void addGate(Gate g, String name) {
 		if (!gates.containsKey(name)) {
 			g.setName(name);
-			g.setView(controller.getView());
-			controller.getView().drawGate(g);
+			if(!GlobalVariables.IS_UNIT_TESTING){
+				g.setView(controller.getView());
+				controller.getView().drawGate(g);
+			}
 			gates.put(name, g);
 		}
 		else {
