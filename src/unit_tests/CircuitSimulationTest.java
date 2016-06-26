@@ -31,11 +31,13 @@ public class CircuitSimulationTest {
 		int expectedSOutput = 0;
 		
 		//Act
+		String CoutGateName = "Cout";
+		String SGateName = "S";
 		CircuitController cc = new CircuitController();
 		CircuitBuilder cb = cc.getCircuitBuilder();
 		Circuit c = cb.getCircuit();
-		int ActualCoutOutput = c.getOutputValue("Cout");
-		int ActualSOutput = c.getOutputValue("S");
+		int ActualCoutOutput = c.getOutputValue(CoutGateName);
+		int ActualSOutput = c.getOutputValue(SGateName);
 		
 		//Assert
 		assertEquals(expectedCoutOutput, ActualCoutOutput);
